@@ -10,7 +10,7 @@ import service.FileOperationsImpl;
 
 public class Main{
     public static void main(String[] args) {
-        FamilyTree familyTree = new FamilyTree();
+        FamilyTree<Person> familyTree = new FamilyTree<>();
 
         // Создаем людей
         Person john = new Person("John", 1950);
@@ -45,7 +45,7 @@ public class Main{
         // }
 
         // Создаем объект для работы с файлами
-        FileOperations fileOps = new FileOperationsImpl();
+        FileOperations<Person> fileOps = new FileOperationsImpl<>();
 
         //Сортируем по имени
         System.out.println("Сортировка по имени: ");
@@ -73,7 +73,7 @@ public class Main{
         }
 
         // Загружаем генеалогическое древо из файла
-        FamilyTree loadedFamilyTree = null;
+        FamilyTree<Person> loadedFamilyTree = null;
         try {
             loadedFamilyTree = fileOps.loadFromFile("familyTree.dat");
             System.out.println("Family tree loaded from file.");
@@ -84,10 +84,13 @@ public class Main{
 
         // Проверяем, что древо загрузилось правильно
         if (loadedFamilyTree != null) {
-            for (Person person : loadedFamilyTree.getPeople()) {
+            for (Person person : loadedFamilyTree) {
                 System.out.println("Loaded person: " +
                         person.getName() + ", born in " + person.getBirthYear());
             }
-        }    
+        }
+        
+        CommandManager cm = new CommandManager(familyTree);
+        cm.start();
     }
 }

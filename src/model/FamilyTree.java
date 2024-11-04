@@ -6,45 +6,47 @@ import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class FamilyTree implements Serializable, Iterable<Person>{
-    private List<Person> people;
+public class FamilyTree<P> implements Serializable, Iterable<P>{
+    private List<P> objects;
     private static final long serialVersionUID = 1L;
 
     public FamilyTree() {
-        this.people = new ArrayList<>();
+        this.objects = new ArrayList<>();
     }
 
-    public void addPerson(Person person) {
-        this.people.add(person);
+    public void addPerson(P person) {
+        this.objects.add(person);
     }
 
-    public List<Person> getChildren(Person parent) {
-        return parent.getChildren();
-    }
+    // public List<Person> getChildren(Person parent) {
+    //     return parent.getChildren();
+    // }
 
-    public Person findPersonByName(String name) {
-        for (Person person : people) {
-            if (person.getName().equals(name)) {
-                return person;
-            }
-        }
-        return null;
-    }
+    // public P findPersonByName(String name) {
+    //     for (P person : objects) {
+    //         if (person.getName().equals(name)) {
+    //             return person;
+    //         }
+    //     }
+    //     return null;
+    // }
 
-    public List<Person> getPeople() {
-        return people;
+    public List<P> getPeople() {
+        return objects;
     }
 
     @Override
-    public Iterator<Person> iterator() {
-        return people.iterator();
+    public Iterator<P> iterator() {
+        return objects.iterator();
     }
 
     public void sortByName(){
-        Collections.sort(people, (p1, p2) -> p1.getName().compareTo(p2.getName()));
+        Collections.sort(objects, (p1, p2) -> p1.toString().compareTo(p2.toString()));
     }
     
     public void sortByBirthYear(){
-        Collections.sort(people,(p1,p2)-> Integer.compare(p1.getBirthYear(),p2.getBirthYear()));
+        if(objects.get(0)instanceof Person){
+            Collections.sort(objects,(p1,p2) -> Integer.compare(((Person)p1).getBirthYear(),((Person) p2).getBirthYear()));
+        }
     }
 }
